@@ -12,6 +12,7 @@ public class Board {
     private final Player playerTwo;
 
     private Player currentMove;
+    private final int[] nextEmptyCellPerColumn;
 
     public Board(final JFrame mainWindow, final int maxRows, final int maxColumns, Player playerOne, Player playerTwo) {
         this.mainWindow = mainWindow;
@@ -21,6 +22,7 @@ public class Board {
         this.currentMove = playerOne;
 
         this.cells = new JButton[maxColumns][maxRows];
+        this.nextEmptyCellPerColumn = new int[maxColumns];
         createBoardButtons(maxColumns, maxRows);
     }
 
@@ -43,12 +45,23 @@ public class Board {
     }
 
     private void handleButtonAction(int x, int y) {
-        if (cells[x][y].getText().equals(BLANK)) {
+        if (nextEmptyCellPerColumn[x] < nextEmptyCellPerColumn.length) {
+            y = nextEmptyCellPerColumn[x];
+            nextEmptyCellPerColumn[x] += 1;
+        }
+
+        if (isMoveValid(x, y)) {
             cells[x][y].setText(currentMove.piece());
             switchPlayers();
         } else {
             Toolkit.getDefaultToolkit().beep();
         }
+    }
+
+    private boolean isMoveValid(final int x, final int y) {
+        return y < cells[0].length
+                && x < cells.length
+                && cells[x][y].getText().equals(BLANK);
     }
 
     private void switchPlayers() {

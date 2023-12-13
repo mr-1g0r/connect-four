@@ -1,11 +1,8 @@
-# Stage 2/4: Placing the pieces
+# Stage 3/4: Filling the board
 ## Description
-An empty game board isn't of much use if we can't do anything with it. In this stage, we will add two important features. First, we need to allow players to place the game pieces. In the board game, they are of different colors. In this desktop version, we will use different letters — X and O.
-
-Second, we need to alternate player turns so that each person can get a fair chance. At this stage, place a piece in the cell where players click and then alternate turns after every click, starting with X.
+Have you noticed the issues in the last stage? When you click on a cell in the top row, it fills that particular cell even if the cells below are empty. In Connect Four, pieces are placed column by column. They are placed onto either the uppermost game piece in that column or, if the column is empty, onto the board bottom. In this stage, we will change the way players place the pieces. We need to designate a separate class that can check the first free cell in each column. The rest remains the same as in the previous stage.
 
 ## Objectives
 In this stage, your program should:
-
-Display an empty game board, where each cell displays a single space " " as its label;
-When a player clicks on a cell, change that cell's label to either X or O depending on the turn, starting with X.
+1. Fill the cells according to the rule above — not by the position of the click but by the column that was clicked on;
+2. Continue to alternate between the X and O pieces after each click.
