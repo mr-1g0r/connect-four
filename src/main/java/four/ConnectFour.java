@@ -4,18 +4,41 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ConnectFour extends JFrame {
-    private static final int MAX_ROWS = 6;
-    private static final int MAX_COLUMNS = 7;
+
+    public static final int WINDOW_WIDTH = 300;
+    public static final int WINDOW_HEIGHT = 300;
+    private Board board;
 
     public ConnectFour() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 300);
+        setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setTitle("Connect Four");
 
-        setLayout(new GridLayout(MAX_ROWS, MAX_COLUMNS));
-        Board board = new Board(this, MAX_ROWS, MAX_COLUMNS, () -> "X", () -> "O");
+        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        createGameBoard();
+        createResetButton();
+
+        pack();
+        setVisible(true);
+    }
+
+    private void createGameBoard() {
+        board = new Board();
         board.render();
 
-        setVisible(true);
+        add(board);
+    }
+
+    private void createResetButton() {
+        JPanel resetPanel = new JPanel();
+        resetPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        JButton resetButton = new JButton("Reset");
+        resetButton.setName("ButtonReset");
+        resetButton.addActionListener(e -> board.reset());
+        resetButton.setFocusPainted(false);
+
+        resetPanel.add(resetButton);
+        add(resetPanel);
     }
 }
